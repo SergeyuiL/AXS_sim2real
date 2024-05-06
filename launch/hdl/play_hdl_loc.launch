@@ -1,0 +1,33 @@
+<launch>
+
+    <!-- play bag -->
+    <include file="$(find sim2real)/launch/bag_play.launch">
+        <arg name="play_bagfile" value="$(find sim2real)/rosbag/0424/remote_control_image.bag"/>
+        <arg name="save_bagfile" value="$(find sim2real)/rosbag/0424/proc.bag"/>
+        <arg name="record"  value="false"/>
+        <arg name="rviz"   value="true"/>
+        <arg name="rviz_config" value="$(find sim2real)/rviz/hdl.rviz"/>
+    </include>
+
+    <!-- hdl loc -->
+    <include file="$(find sim2real)/launch/hdl/hdl_loc.launch" >
+        <!-- arguments -->
+        <arg name="nodelet_manager" value="livox_nodelet_manager" />
+        <arg name="points_topic" value="/livox/lidar_inv" />
+        <!-- input clouds are transformed in odom_child_frame, and then localization is performed in that frame -->
+        <!-- this is useful to match the LIDAR and IMU coodinate systems -->
+        <arg name="odom_child_frame_id" value="livox_frame_inv" />
+        <arg name="map"  value="$(find sim2real)/pcdmaps/0424/scans_0424.pcd"/>
+
+        <!-- optional arguments -->
+        <arg name="use_imu" value="false" />
+        <arg name="invert_imu_acc" value="false" />
+        <arg name="invert_imu_gyro" value="false" />
+        <arg name="use_global_localization" value="true" />
+        <arg name="imu_topic" value="/imu/data" />
+        <arg name="enable_robot_odometry_prediction" value="false" />
+        <arg name="robot_odom_frame_id" value="odom" />
+        <arg name="plot_estimation_errors" value="false" />
+    </include>
+
+</launch>

@@ -6,10 +6,9 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
         - /TF1/Frames1
-        - /PointCloud21
         - /DepthCloud1/Auto Size1
-        - /PointCloud22
       Splitter Ratio: 0.5
     Tree Height: 444
   - Class: rviz/Selection
@@ -29,7 +28,7 @@ Panels:
   - Class: rviz/Time
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: Image
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -63,13 +62,13 @@ Visualization Manager:
       Frames:
         All Enabled: false
         aft_mapped:
-          Value: true
+          Value: false
         arm_base:
           Value: false
         camera:
-          Value: true
+          Value: false
         camera_init:
-          Value: true
+          Value: false
         car_base_link:
           Value: false
         custom_end_link:
@@ -79,10 +78,14 @@ Visualization Manager:
         imu_link:
           Value: false
         laser_odom:
-          Value: true
+          Value: false
         link6:
           Value: false
         livox_frame:
+          Value: false
+        livox_frame_inv:
+          Value: true
+        map:
           Value: true
       Marker Alpha: 1
       Marker Scale: 4
@@ -91,22 +94,23 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        aft_mapped:
-          {}
-        camera:
-          {}
-        camera_init:
-          livox_frame:
-            car_base_link:
-              arm_base:
-                {}
-              imu_link:
-                {}
-        laser_odom:
-          {}
         link6:
           gripper_link:
             custom_end_link:
+              {}
+        map:
+          camera_init:
+            aft_mapped:
+              {}
+            camera:
+              livox_frame_inv:
+                livox_frame:
+                  car_base_link:
+                    arm_base:
+                      {}
+                    imu_link:
+                      {}
+            laser_odom:
               {}
       Update Interval: 0
       Value: true
@@ -116,7 +120,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: false
       Name: Map
-      Topic: /hdl_global_localization/bbs/gridmap
+      Topic: /map
       Unreliable: false
       Use Timestamp: false
       Value: false
@@ -132,7 +136,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -147,7 +151,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Angle Tolerance: 0.10000000149011612
       Class: rviz/Odometry
       Covariance:
@@ -241,29 +245,57 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: ""
+      Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
       Name: PointCloud2
-      Position Transformer: ""
+      Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
-      Topic: /Laser_map
+      Topic: /livox/lidar_inv
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic: /scan
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: livox_frame
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -287,7 +319,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 43.969451904296875
+      Distance: 52.11555480957031
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -295,17 +327,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -10.619255065917969
-        Y: 1.244982361793518
-        Z: -36.61949157714844
+        X: 0.4404240846633911
+        Y: 1.1762629747390747
+        Z: -37.8028678894043
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.2847963571548462
+      Pitch: 1.5497961044311523
       Target Frame: <Fixed Frame>
-      Yaw: 6.174838542938232
+      Yaw: 0.8666549324989319
     Saved: ~
 Window Geometry:
   Displays:

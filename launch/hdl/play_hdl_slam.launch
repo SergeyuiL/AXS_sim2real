@@ -1,0 +1,23 @@
+<launch>
+    <!-- play bag -->
+    <include file="$(find sim2real)/launch/bag_play.launch">
+        <arg name="play_bagfile" value="$(find sim2real)/rosbag/0424/remote_control_image.bag"/>
+        <arg name="save_bagfile" value="$(find sim2real)/rosbag/0424/proc.bag"/>
+        <arg name="record"  value="false"/>
+        <arg name="rviz"   value="true"/>
+        <arg name="rviz_config" value="$(find sim2real)/rviz/hdl.rviz"/>
+    </include>
+
+    <!-- hdl slam -->
+    <include file="$(find sim2real)/launch/hdl/hdl_slam.launch">
+        <arg name="nodelet_manager" value="livox_nodelet_manager" />
+        <arg name="enable_imu_frontend" value="false" />
+        <arg name="enable_floor_detection" value="false" />
+        <arg name="enable_gps" value="false" />
+        <arg name="enable_imu_acc" value="false" />
+        <arg name="enable_imu_ori" value="false" />
+        <arg name="points_topic" value="/livox/lidar_inv" />
+        <arg name="imu_topic" value="/livox/imu" />
+    </include>
+    
+</launch>

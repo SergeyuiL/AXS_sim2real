@@ -1,0 +1,33 @@
+<launch>
+    <param name="use_sim_time" value="true" />
+    <arg name="play_bagfile" default="$(find sim2real)/rosbag/0424/remote_control_image.bag"/>
+    <arg name="save_bagfile" default="$(find sim2real)/rosbag/0424/proc.bag"/>
+    <arg name="record"  default="false"/>
+    <arg name="rviz"   default="true"/>
+    <arg name="rviz_config" default="$(find sim2real)/rviz/hdl.rviz"/>
+
+    <!-- tf -->
+    <include file="$(find sim2real)/launch/robot_state_publisher.launch">
+        <arg name="robot_description_path" value="$(find sim2real)/urdf/AIRBOT_V3_v2-3.urdf"/>
+    </include>
+
+    <!-- lidar invert -->
+    <include file="$(find lidar_transform)/launch/transform.launch">
+        <arg name="input_lidar_topic" value="/livox/lidar" />
+        <arg name="output_lidar_topic" value="/livox/lidar_inv" />
+        <!-- <arg name="input_imu_topic" value="/livox/imu" />
+        <arg name="output_imu_topic" value="/livox/imu_inv" /> -->
+        <arg name="input_frame" value="livox_frame" />
+        <arg name="output_frame" value="livox_frame_inv" />
+    </include>
+
+    <!-- record rosbag -->
+    <node if="$(arg record)" name="rosbag_record" pkg="rosbag" type="record" args="--lz4 --repeat-latched -a -O $(arg save_bagfile)" output="screen" />
+
+    <!-- rosbag play -->
+    <node name="player" pkg="rosbag" type="play" output="screen" args="--clock --rate=1.0 $(arg play_bagfile)" />
+
+    <!-- rviz -->
+    <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" required="true"/>
+
+</launch>
